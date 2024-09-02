@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
+    "dev": "npx nodemon --inspect=0.0.0.0:9229 bin/www",
     "prod": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "f2elint-scan": "f2elint scan",

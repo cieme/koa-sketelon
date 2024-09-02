@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwt.config');
-
+const AUTHORIZATION = 'authorization';
 const verifyToken = async (ctx, next) => {
   // console.log(
   //   jwt.sign(
@@ -19,16 +19,16 @@ const verifyToken = async (ctx, next) => {
 
     // 检测接口是否在不校验接口列表中
     const inWhiteList = jwtConfig.unlessPath.some((item) => item === url);
-
+    const isStartFolder = jwtConfig.unlessStartWithList.some((item) => {
+      return url.startsWith(item);
+    });
     console.log(url, inWhiteList);
 
-    if (inWhiteList) {
+    if (inWhiteList || isStartFolder) {
       await next();
     } else {
-      const authorization = ctx.request.headers['authorization'];
+      const authorization = ctx.request.headers[AUTHORIZATION] || '';
       const token = authorization.replace('Bearer ', '');
-
-      console.log(token);
 
       if (token) {
         try {

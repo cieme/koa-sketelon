@@ -21,7 +21,6 @@ router.get('/string', async (ctx, next) => {
 router.get('/json', async (ctx, next) => {
   try {
     const result = await query(`select * from user`);
-
     ctx.response.ok(
       OK({
         title: 'koa2 json',
